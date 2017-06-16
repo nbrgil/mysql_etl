@@ -1,0 +1,103 @@
+id;name;maximum_installments
+3;Cartao de Credito;12
+5;Cartao de Credito;12
+6;Cartao de Credito;12
+7;Cartao de Credito;12
+34;Cartao de Credito;6
+37;Cartao de Credito;10
+57;Cartao de Credito;12
+74;Cartao de Credito;12
+75;Cartao de Credito;12
+76;Cartao de Credito;1
+82;Cartao de Credito;12
+93;Cartao de Credito;12
+94;Cartao de Credito;12
+4;Cartao de Debito;1
+15;Cartao de Debito;6
+19;Cartao de Debito;6
+23;Cartao de Debito;6
+28;Cartao de Debito;1
+29;Cartao de Debito;6
+33;Cartao de Debito;1
+38;Cartao de Debito;1
+9;Boleto;1
+14;Boleto;1
+20;Boleto;1
+24;Boleto;1
+30;Boleto;1
+35;Boleto;1
+73;Boleto;1
+77;Boleto;1
+91;Boleto;1
+101;Boleto;1
+10;Financiamento;1
+12;Financiamento;1
+17;Financiamento;1
+21;Financiamento;1
+26;Financiamento;1
+31;Financiamento;1
+8;Transferencia;1
+13;Transferencia;1
+18;Transferencia;1
+22;Transferencia;1
+27;Transferencia;1
+32;Transferencia;1
+83;Transferencia;1
+88;Saque;1
+11;Saque;1
+16;Saque;1
+25;Saque;1
+36;Saque;1
+39;Saque;1
+40;Saque;1
+41;Saque;1
+42;Saque;1
+43;Saque;1
+44;Saque;1
+45;Saque;1
+46;Saque;1
+47;Saque;1
+48;Saque;1
+49;Saque;1
+50;Saque;1
+51;Saque;1
+52;Saque;1
+53;Saque;1
+54;Saque;1
+55;Saque;1
+56;Saque;1
+59;Saque;1
+60;Saque;1
+61;Saque;1
+62;Saque;1
+63;Saque;1
+64;Saque;1
+65;Saque;1
+66;Saque;1
+67;Saque;1
+68;Saque;1
+69;Saque;1
+70;Saque;1
+71;Saque;1
+72;Saque;1
+89;Saque;1
+90;Saque;1
+92;Saque;1
+107;Saque;1
+108;Saque;1
+1;MoIP;1
+2;MoIP;1
+58;MoIP;1
+78;Debito Automatico;1
+79;Debito Automatico;1
+80;Debito Automatico;1
+81;Debito Automatico;1
+84;Debito Automatico;1
+85;Debito Automatico;1
+86;Debito Automatico;1
+87;Debito Automatico;1
+103;Cartao de Credito - MPOS;12
+105;Cartao de Credito - MPOS;12
+109;Cartao de Credito - MPOS;12
+104;Cartao de Debito - MPOS;1
+106;Cartao de Debito - MPOS;1

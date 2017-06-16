@@ -1,0 +1,19 @@
+version: '2'
+services:
+    fee_db:
+        image: mysql
+        volumes:
+            - ${PWD}/init-sql:/docker-entrypoint-initdb.d
+        environment:
+            - MYSQL_ROOT_PASSWORD=mydb
+            - MYSQL_DATABASE=mydb
+            - MYSQL_USER=mydb
+            - MYSQL_PASSWORD=mydb
+        ports:
+            - 3307:3306
+
+    fee_etl:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: fee_etl
