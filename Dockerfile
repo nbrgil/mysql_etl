@@ -5,8 +5,6 @@
 FROM python:3.6
 MAINTAINER Rodrigo Gil
 
-COPY requirements.txt requirements.txt
-
 RUN apt-get update && \
   apt-get install -y build-essential \
     libmysqlclient-dev \
@@ -15,7 +13,7 @@ RUN apt-get update && \
     redis-tools \
     libxml2-dev \
     libxslt-dev \
-  && pip install --no-cache-dir -r requirements.txt \
+  && pip install pandas sqlalchemy pymysql mysqlclient \
   && rm -rf $HOME/.cache \
   && apt-get purge -y python.* \
   && apt-get autoremove -y \
