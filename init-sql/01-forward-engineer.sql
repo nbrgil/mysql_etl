@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`member` (
   `id` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `login` VARCHAR(45) NOT NULL,
-  `enable` VARCHAR(45) NOT NULL,
+  `enable` INT NOT NULL,
   `last_name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB

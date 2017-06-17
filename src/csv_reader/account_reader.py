@@ -1,13 +1,13 @@
+"""."""
 import abc
-from domain_import import DomainImport
+from base_reader import BaseReader
 
 
-class AccountImport(DomainImport):
+class AccountReader(BaseReader):
     """."""
 
     def __init__(self):
         """."""
-        self.table_name = 'account'
         self.datafile_name = 'account.csv'
         self.column_names = [
             'id', 'status', 'type', 'fee_type', 'has_bonus_withdraw',
@@ -21,8 +21,3 @@ class AccountImport(DomainImport):
         """Transformar o data frame."""
         self.df.drop('v2_integration_level', axis=1, inplace=True)
         self.df.drop('negotiated_tax', axis=1, inplace=True)
-        self.df = self.df[~self.df.index.duplicated()]
-
-
-if __name__ == '__main__':
-    AccountImport().run()

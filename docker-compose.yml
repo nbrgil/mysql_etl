@@ -20,7 +20,5 @@ services:
         environment:
             - PROJECT_HOME=/usr/local/fee_etl
         volumes:
-            - ${PWD}/lib:/usr/local/fee_etl/lib
-            - ${PWD}/datafiles:/usr/local/fee_etl/datafiles
-            - ${PWD}/script/entrypoint.sh:/entrypoint.sh
-        entrypoint: /entrypoint.sh
+            - ${PWD}:/usr/local/fee_etl
+        entrypoint: /usr/local/fee_etl/script/entrypoint.sh
