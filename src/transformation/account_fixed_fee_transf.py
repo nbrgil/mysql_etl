@@ -30,6 +30,24 @@ class AccountFixedFeeTransf:
         # TODO gerar um log quando essa situacao existe
         self.df = self.df[self.df['account_id'].isin(account_df['id'])]
 
+    def remove_channel_value(self, account_df, account_channel_df):
+        """Remove registros onde o canal tem prioridade."""
+        account_not_negotiated = account_df[account_df.negotiated_tax == 0]
+
+        account_with_channel = account_not_negotiated.merge(
+            account_channel_df, left_on='id',
+            right_on='account_id', how='inner'
+        )
+
+        self.df = self.df.merge(
+            account_with_channel[['id']], left_on='account_id',
+            right_on='id', indicator='merge_column', how='left',
+            suffixes=('', '_y')
+        )
+        self.df = (self.df[self.df.merge_column == 'left_only'])
+        self.df.drop('id', axis=1, inplace=True)
+        self.df.drop('merge_column', axis=1, inplace=True)
+
     def fill_join_values(self, member_df):
         """Preencher member_id usando como base account_id."""
         self.df = self.df.merge(
@@ -40,7 +58,7 @@ class AccountFixedFeeTransf:
             'id': 'member_id'
         }, inplace=True)
 
-    def transform(self, df, account_df, member_df):
+    def transform(self, df, account_df, member_df, account_channel_df):
         """Aplicar todas as transformacoes."""
         self.df = df
         self.rename_columns()
@@ -48,5 +66,6 @@ class AccountFixedFeeTransf:
         self.drop_columns()
         self.remove_invalid_fk(account_df)
         self.fill_join_values(member_df)
+        self.remove_channel_value(account_df, account_channel_df)
 
         return self.df

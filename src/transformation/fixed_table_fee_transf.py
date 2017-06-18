@@ -88,7 +88,27 @@ class FixedTableFeeTransf:
             'id': 'member_id'
         }, inplace=True)
 
-    def transform(self, df, current_fee_df, account_df, member_df):
+    def remove_channel_value(self, account_df, account_channel_df):
+        """Remove registros onde o canal tem prioridade."""
+        account_not_negotiated = account_df[account_df.negotiated_tax == 0]
+
+        account_with_channel = account_not_negotiated.merge(
+            account_channel_df, left_on='id',
+            right_on='account_id', how='inner'
+        )
+
+        self.df = self.df.merge(
+            account_with_channel[['id']], left_on='account_id',
+            right_on='id', indicator='merge_column', how='left',
+            suffixes=('', '_y')
+        )
+        self.df = (self.df[self.df.merge_column == 'left_only'])
+        self.df.drop('id', axis=1, inplace=True)
+        self.df.drop('merge_column', axis=1, inplace=True)
+
+    def transform(
+        self, df, current_fee_df, account_df, member_df, account_channel_df
+    ):
         """Aplicar todas as transformacoes."""
         self.df = df
         self.fix_float_values()
@@ -97,5 +117,6 @@ class FixedTableFeeTransf:
         self.rename_columns()
         self.generate_default_df(current_fee_df, account_df)
         self.fill_join_values(member_df)
+        self.remove_channel_value(account_df, account_channel_df)
 
         return self.df
