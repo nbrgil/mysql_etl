@@ -1,4 +1,4 @@
-"""."""
+"""Importador da tabela fee."""
 import abc
 import pandas as pd
 # readers
@@ -24,16 +24,19 @@ from transformation.tax_applied_to_account_transf \
 
 
 class FeeImport(BaseImport):
-    """."""
+    """Importador da tabela fee."""
 
     def __init__(self):
-        """."""
+        """Construtor."""
         self.table_name = 'fee'
         super().__init__()
 
     @abc.abstractmethod
     def transform(self):
-        """Transformar para salvar."""
+        """Chama cada classe que efetua as transformacao necessarias.
+
+        No final, concatena os dataframe.
+        """
         # modelo 1
         tr1_df = TaxAppliedToAccountTransf().transform(
             self.tax_app_acc_fee_df,
@@ -94,7 +97,10 @@ class FeeImport(BaseImport):
         self.channel_df = ChannelReader().read()
 
     def run(self):
-        """Executar todos os processos."""
+        """Executar todos os processos.
+
+        O metodo que salva os dados esta na classe pai.
+        """
         self.read()
         self.transform()
         self.save()

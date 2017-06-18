@@ -1,10 +1,10 @@
-"""."""
+"""Importador generico de tabelas de dominio."""
 import abc
 from table_importer.base_import import BaseImport
 
 
 class DomainImport(BaseImport):
-    """."""
+    """Importador generico de tabelas de dominio."""
 
     def read(self):
         """Leitura do CSV."""

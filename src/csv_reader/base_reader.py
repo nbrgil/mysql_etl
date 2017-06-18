@@ -1,4 +1,4 @@
-"""."""
+"""Leitor de arquivos (classe pai)."""
 from util.mysql_connection import MysqlConnection
 import os
 import pandas as pd
@@ -9,7 +9,7 @@ class BaseReader:
     """Classe base para leitura de csv."""
 
     def __init__(self):
-        """."""
+        """Construtor."""
         self.__db_engine = MysqlConnection().connect()
         self.__project_home = os.environ['PROJECT_HOME']
 

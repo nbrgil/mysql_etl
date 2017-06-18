@@ -5,7 +5,11 @@ class ChannelFixedFeeTransf:
     """Contem as transformacoes para inserir na tabela fee."""
 
     def set_account_id(self, account_channel_df, account_df):
-        """Preencher account id usando a tabela de canais."""
+        """Preencher account id usando a tabela de canais.
+
+        Para descobrir qual account_id sera inserido, temos que usar o
+        relacionamento entre canais e contas.
+        """
         account_channel_df = account_channel_df.merge(
             account_df[['id', 'negotiated_tax']], left_on='account_id',
             right_on='id', how='inner'
@@ -40,7 +44,7 @@ class ChannelFixedFeeTransf:
         }, inplace=True)
 
     def drop_columns(self):
-        """Remove as colunas nao usada."""
+        """Remove as colunas nao usadas."""
         # TODO qual a necessidade real dessa coluna?
         self.df.drop('fixed_tax_percentual', axis=1, inplace=True)
 

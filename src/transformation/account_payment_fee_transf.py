@@ -49,7 +49,8 @@ class AccountPaymentFeeTransf:
     def pivot_installment_values(self):
         """Efetua um pivot das colunas de valores.
 
-        Esse pivot eh realizado para duplicar o valor por parcela
+        Esse arquivo nao possui informacao para cada mes. Por isso, os
+        registros serao duplicados para facilitar a consulta.
         """
         self.df = pd.melt(self.df, id_vars=[
             'account_id', 'payment_method_id', 'minimum_fee_value',
@@ -62,11 +63,6 @@ class AccountPaymentFeeTransf:
 
     def remove_invalid_account(self, account_df):
         """Remove registro onde a conta eh invalida."""
-        # TODO gerar um log quando essa situacao existe
-        self.df = self.df[self.df['account_id'].isin(account_df['id'])]
-
-    def filter_account_in_channel(self, channel_account_df):
-        """Remove registros que possuem ."""
         # TODO gerar um log quando essa situacao existe
         self.df = self.df[self.df['account_id'].isin(account_df['id'])]
 
@@ -83,7 +79,13 @@ class AccountPaymentFeeTransf:
         }, inplace=True)
 
     def remove_channel_value(self, account_df, account_channel_df):
-        """Remove registros onde o canal tem prioridade."""
+        """Remove registros onde o canal tem prioridade.
+
+        Eh realizado um merge com a lista de contas de um canal, somente
+        considerando as contas que nao foram negociadas. As linhas com essas
+        contas sao retiradas, pois serao inseridas com o valor do canal
+        posteriormente
+        """
         account_not_negotiated = account_df[account_df.negotiated_tax == 0]
 
         account_with_channel = account_not_negotiated.merge(

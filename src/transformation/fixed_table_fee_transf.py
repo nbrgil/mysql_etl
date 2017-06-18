@@ -32,14 +32,14 @@ class FixedTableFeeTransf:
     def drop_columns(self):
         """Remove colunas nao utilizadas.
 
-        Elas sao removidas apos tratamento em outra coluna
+        Elas sao removidas apos tratamento em outra coluna.
         """
         # TODO qual a necessidade real dessa coluna?
         self.df.drop('fixed_tax_percentual', axis=1, inplace=True)
         self.df.drop('id', axis=1, inplace=True)
 
     def df_crossjoin(self, df1, df2, **kwargs):
-        """."""
+        """Usado em generate_default_df para fazer cross join."""
         df1['_tmpkey'] = 1
         df2['_tmpkey'] = 1
 
@@ -53,7 +53,17 @@ class FixedTableFeeTransf:
         return res
 
     def generate_default_df(self, current_fee_df, account_df):
-        """."""
+        """Gera o dataframe com os dados default.
+
+        Para isso precisamos descobrir quais contas nao tem valor definido.
+        1) Como essa tabela nao tem account id, cruzamos os dados com todas
+        as contas do tipo 1 e 3;
+        2) Buscamos em current_fee_df (valores definidos nos arquivos
+        account_fixed_table_fee e tax_applied_to_account) quais ja foram
+        utilizados e retiramos do dataframe de valores default
+
+        Resumindo: inserir = arquivo fixed_table_fee - valores ja preenchidos.
+        """
         crossed_acc_df = self.df_crossjoin(
             account_df.query('fee_type in (1,3)'), self.df
         )

@@ -1,5 +1,4 @@
 """Transformacoes no arquivo tax_applied_to_account (modelo 1)."""
-import pandas as pd
 
 
 class TaxAppliedToAccountTransf:
@@ -54,14 +53,19 @@ class TaxAppliedToAccountTransf:
         }, inplace=True)
 
     def remove_channel_value(self, account_df, account_channel_df):
-        """Remove registros onde o canal tem prioridade."""
+        """Remove registros onde o canal tem prioridade.
+
+        Eh realizado um merge com a lista de contas de um canal, somente
+        considerando as contas que nao foram negociadas. As linhas com essas
+        contas sao retiradas, pois serao inseridas com o valor do canal
+        posteriormente
+        ."""
         account_not_negotiated = account_df[account_df.negotiated_tax == 0]
 
         account_with_channel = account_not_negotiated.merge(
             account_channel_df, left_on='id',
             right_on='account_id', how='inner'
         )
-
         self.df = self.df.merge(
             account_with_channel[['id']], left_on='account_id',
             right_on='id', indicator='merge_column', how='left',
@@ -72,7 +76,7 @@ class TaxAppliedToAccountTransf:
         self.df.drop('merge_column', axis=1, inplace=True)
 
     def transform(self, df, account_df, member_df, account_channel_df):
-        """Aplicar todas as transformacoes."""
+        """Aplicar todas as transformacoes acima."""
         self.df = df
         self.fix_float_values()
         self.remove_invalid_fk(account_df)

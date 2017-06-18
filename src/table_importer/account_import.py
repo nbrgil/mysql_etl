@@ -1,14 +1,14 @@
-"""."""
+"""Importador de contas."""
 import abc
 from table_importer.base_import import BaseImport
 from csv_reader.account_reader import AccountReader
 
 
 class AccountImport(BaseImport):
-    """."""
+    """Importador de contas."""
 
     def __init__(self):
-        """."""
+        """Construtor."""
         self.table_name = 'account'
         self.reader = AccountReader()
         super().__init__()

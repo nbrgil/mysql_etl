@@ -31,7 +31,13 @@ class AccountFixedFeeTransf:
         self.df = self.df[self.df['account_id'].isin(account_df['id'])]
 
     def remove_channel_value(self, account_df, account_channel_df):
-        """Remove registros onde o canal tem prioridade."""
+        """Remove registros onde o canal tem prioridade.
+
+        Eh realizado um merge com a lista de contas de um canal, somente
+        considerando as contas que nao foram negociadas. As linhas com essas
+        contas sao retiradas, pois serao inseridas com o valor do canal
+        posteriormente
+        """
         account_not_negotiated = account_df[account_df.negotiated_tax == 0]
 
         account_with_channel = account_not_negotiated.merge(

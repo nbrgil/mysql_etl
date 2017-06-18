@@ -52,3 +52,11 @@ O projeto foi feito considerando que hoje há uma grande dificuldade para saber 
 As regras foram colocadas no ETL, e todas as taxas vão parar em uma única tabela chamada "mydb.fee".
 
 Com essa tabela, o usuário/aplicação/relatório poderão consultar qual o imposto a se pagar com um SELECT simples filtrando CONTA, FORMA DE PAGAMENTO e NÚMERO DA PARCELA, fazendo join somente em casos que deseja mais informações da conta ou do membro relativo ao pagamento.
+
+### Analisando o código
+
+Dentro do possível, tentei isolar as responsabilidades das classes.
+Sugiro começar pelo main.py. Ele chama os importadores.
+Cada importador chama os readers (arquivos csv) e as classes de transformação.
+Algumas transformações ficaram mais complexas do que gostaria e acredito que um período a mais de trabalho possa melhorar isso.
+De qualquer forma, o código está com comentários.

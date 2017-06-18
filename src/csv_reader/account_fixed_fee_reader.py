@@ -1,13 +1,13 @@
-"""."""
+"""Leitor de arquivos (ver datafile_name abaixo)."""
 import abc
 from csv_reader.base_reader import BaseReader
 
 
 class AccountFixedFeeReader(BaseReader):
-    """."""
+    """Leitor de arquivos."""
 
     def __init__(self):
-        """."""
+        """Construtor."""
         self.datafile_name = 'account_fixed_table_fee.csv'
         self.column_names = [
             'id', 'account_id', 'payment_form_id',

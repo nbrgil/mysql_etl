@@ -1,14 +1,13 @@
-"""."""
+"""Leitor de arquivos (ver datafile_name abaixo)."""
 import abc
 from csv_reader.base_reader import BaseReader
-from csv_reader.channel_reader import ChannelReader
 
 
 class AccountChannelReader(BaseReader):
-    """."""
+    """Leitor das contas por canal."""
 
     def __init__(self):
-        """."""
+        """Construtor."""
         self.datafile_name = 'accounts_channels.csv'
         self.column_names = [
             'channel_id', 'account_id'

@@ -1,5 +1,4 @@
-"""."""
-import pandas as pd
+"""Importador generico."""
 import os
 from util.mysql_connection import MysqlConnection
 import abc

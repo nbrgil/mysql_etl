@@ -1,13 +1,13 @@
-"""."""
+"""Leitor de arquivos (ver datafile_name abaixo)."""
 import abc
 from csv_reader.base_reader import BaseReader
 
 
 class PaymentFormReader(BaseReader):
-    """."""
+    """Leitor de arquivos."""
 
     def __init__(self):
-        """."""
+        """Construtor."""
         self.datafile_name = 'payment_form.csv'
         self.column_names = ['id', 'name', 'maximum_installments']
         super().__init__()
