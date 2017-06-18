@@ -1,7 +1,7 @@
 """."""
 import pandas as pd
 import os
-from mysql_connection import MysqlConnection
+from util.mysql_connection import MysqlConnection
 import abc
 
 
@@ -22,25 +22,32 @@ class BaseImport:
     def table_name(self, val):
         self.__table_name = val
 
-    def read(self, datafile_name, index_column, column_names):
-        """Leitura do CSV."""
-        self.df = pd.read_csv(
-            self.__project_home + '/datafiles/' + datafile_name,
-            index_col=index_column,
-            header=1,
-            names=column_names,
-            delimiter=';'
-        )
+    @property
+    def reader(self):
+        """Propriedade 'reader'."""
+        return self.__reader
 
-        return self.df
+    @reader.setter
+    def reader(self, val):
+        self.__reader = val
+
+    def read(self):
+        """Leitura do CSV."""
+        self.df = self.reader.read()
 
     def save(self):
         """Salvar no banco."""
         self.df.to_sql(
             name=self.__table_name, con=self.__db_engine, schema='mydb',
-            if_exists='append', index=True
+            if_exists='append', index=False
         )
 
     @abc.abstractmethod
+    def transform(self):
+        """Efetua Transformacoes necessarias antes de salvar."""
+
     def run(self):
         """Executar todos os processos."""
+        self.read()
+        self.transform()
+        self.save()

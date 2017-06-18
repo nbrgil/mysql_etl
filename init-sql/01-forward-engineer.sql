@@ -5,6 +5,9 @@
 CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
 
+GRANT ALL PRIVILEGES ON mydb.* TO 'mydb'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
 CREATE TABLE IF NOT EXISTS `mydb`.`member` (
   `id` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
@@ -42,6 +45,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`fee` (
   `minimum_fee_value` FLOAT NULL COMMENT 'Taxa mínima cobrada em todo pagamento',
   `variable_fee_percentage` FLOAT NULL COMMENT 'Taxa variável de acordo com o valor e método do pagamento',
   `antecipation_fee_percentage` FLOAT NULL COMMENT 'Taxa percentual aplicada para cada dia antecipado',
+  `antecipation_fee_interest_type` VARCHAR(45) NULL COMMENT 'Tipo de juros aplicado a taxa de antecipação',
   PRIMARY KEY (`id`),
   INDEX `fk_account_tax_pf_idx` (`payment_method_id` ASC),
   UNIQUE INDEX `UN_FEE` (`account_id` ASC, `payment_method_id` ASC, `installment_number` ASC),
@@ -61,4 +65,4 @@ CREATE TABLE IF NOT EXISTS `mydb`.`fee` (
     REFERENCES `mydb`.`member` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = InnoDB

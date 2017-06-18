@@ -3,16 +3,13 @@ import abc
 from csv_reader.base_reader import BaseReader
 
 
-class AccountReader(BaseReader):
+class MemberReader(BaseReader):
     """."""
 
     def __init__(self):
         """."""
-        self.datafile_name = 'account.csv'
-        self.column_names = [
-            'id', 'status', 'type', 'fee_type', 'has_bonus_withdraw',
-            'v2_integration_level', 'negotiated_tax', 'is_transparent'
-        ]
+        self.datafile_name = 'member.csv'
+        self.column_names = ['id', 'name', 'login', 'enable', 'last_name']
         super().__init__()
 
     @abc.abstractmethod

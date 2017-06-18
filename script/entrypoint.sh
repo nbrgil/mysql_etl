@@ -9,4 +9,4 @@ echo 'Importing...'
 # python ${PROJECT_HOME}/lib/fee_import.py && echo '--> fee.csv ok'
 
 
-python ${PROJECT_HOME}/src/main.py
+python ${PROJECT_HOME}/src/main.py && echo '--> ok'

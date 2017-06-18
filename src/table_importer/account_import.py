@@ -1,29 +1,20 @@
 """."""
 import abc
-from domain_import import DomainImport
+from table_importer.base_import import BaseImport
+from csv_reader.account_reader import AccountReader
 
 
-class AccountImport(DomainImport):
+class AccountImport(BaseImport):
     """."""
 
     def __init__(self):
         """."""
         self.table_name = 'account'
-        self.datafile_name = 'account.csv'
-        self.column_names = [
-            'id', 'status', 'type', 'fee_type', 'has_bonus_withdraw',
-            'v2_integration_level', 'negotiated_tax', 'is_transparent'
-        ]
-        self.index_column = 'id'
+        self.reader = AccountReader()
         super().__init__()
 
     @abc.abstractmethod
     def transform(self):
-        """Transformar o data frame."""
+        """Transformar para salvar."""
         self.df.drop('v2_integration_level', axis=1, inplace=True)
         self.df.drop('negotiated_tax', axis=1, inplace=True)
-        self.df = self.df[~self.df.index.duplicated()]
-
-
-if __name__ == '__main__':
-    AccountImport().run()
