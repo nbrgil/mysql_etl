@@ -1,11 +1,17 @@
 """."""
 import abc
-from table_importer.base_import import BaseImport
+import pandas as pd
+# readers
 from csv_reader.account_fixed_fee_reader import AccountFixedFeeReader
+from csv_reader.account_payment_fee_reader import AccountPaymentFeeReader
 from csv_reader.account_reader import AccountReader
 from csv_reader.payment_form_reader import PaymentFormReader
 from csv_reader.member_reader import MemberReader
+# importers
+from table_importer.base_import import BaseImport
+# transformation
 from transformation.account_fixed_fee_transf import AccountFixedFeeTransf
+from transformation.account_payment_fee_transf import AccountPaymentFeeTransf
 
 
 class FeeImport(BaseImport):
@@ -19,25 +25,25 @@ class FeeImport(BaseImport):
     @abc.abstractmethod
     def transform(self):
         """Transformar para salvar."""
-        tr_df = AccountFixedFeeTransf().transform(
+        # modelo 2
+        tr2_df = AccountPaymentFeeTransf().transform(
+            self.acc_paym_fee_df, self.account_df, self.member_df
+        )
+
+        # modelo 3
+        tr3_df = AccountFixedFeeTransf().transform(
             self.acc_fixed_fee_df,
             self.account_df,
             self.payment_form_df,
             self.member_df
         )
 
-        tr_df = AccountFixedFeeTransf().transform(
-            self.acc_fixed_fee_df,
-            self.account_df,
-            self.payment_form_df,
-            self.member_df
-        )
-
-        self.df = tr_df
+        self.df = pd.concat([tr2_df, tr3_df], ignore_index=True)
 
     def read(self):
         """Leitura dos CSVs."""
         self.account_df = AccountReader().read()
         self.payment_form_df = PaymentFormReader().read()
         self.acc_fixed_fee_df = AccountFixedFeeReader().read()
+        self.acc_paym_fee_df = AccountPaymentFeeReader().read()
         self.member_df = MemberReader().read()

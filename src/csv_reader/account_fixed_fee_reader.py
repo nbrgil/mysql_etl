@@ -14,13 +14,12 @@ class AccountFixedFeeReader(BaseReader):
             'parcel_number', 'fixed_tax_percentual',
             'parcel_tax_percentual', 'fixed_tax_value'
         ]
-        self.index_column = 'id'
         super().__init__()
 
     @abc.abstractmethod
     def transform(self):
         """Transformar o data frame."""
-        self.df = self.df[~self.df.index.duplicated()]
+        self.df.drop_duplicates(subset='id', keep='first', inplace=True)
         self.df['parcel_tax_percentual'] = \
             self.df['parcel_tax_percentual'].str.replace(",", ".")
         self.df['fixed_tax_value'] = \

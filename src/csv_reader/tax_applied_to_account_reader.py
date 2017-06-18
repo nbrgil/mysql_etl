@@ -1,15 +1,14 @@
 """."""
 import abc
 from csv_reader.base_reader import BaseReader
-import pandas as pd
 
 
-class AccountPaymentFeeReader(BaseReader):
+class TaxAppliedToAccountReader(BaseReader):
     """."""
 
     def __init__(self):
         """."""
-        self.datafile_name = 'account_payment_fee.csv'
+        self.datafile_name = 'tax_applied_to_account.csv'
         self.column_names = [
             'id', 'account_id', 'payment_form_id',
             'fixed', 'antecipation_percentage',

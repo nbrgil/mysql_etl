@@ -7,9 +7,8 @@ from table_importer.payment_method_import import PaymentMethodImport
 from table_importer.fee_import import FeeImport
 
 # Readers
-x = AccountPaymentFeeReader()
-x.read()
-x.transform()
+# x = AccountPaymentFeeReader()
+# x.read()
 # print(x.df)
 
 # x = AccountReader()
@@ -17,7 +16,7 @@ x.transform()
 # print(x.df)
 
 # Importers
-# AccountImport().run()
-# MemberImport().run()
-# PaymentMethodImport().run()
-# FeeImport().run()
+AccountImport().run()
+MemberImport().run()
+PaymentMethodImport().run()
+FeeImport().run()
