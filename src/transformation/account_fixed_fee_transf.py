@@ -14,13 +14,10 @@ class AccountFixedFeeTransf:
         }, inplace=True)
 
     def set_constant_values(self):
-        """Adicionar colunas com valores constantes.
-
-        Regra de negocio: aplicar uma taxa fixa de 1,99% a.m. (juros compostos)
-        sobre a quantidade de dias que serao antecipados
-        """
+        """Adicionar colunas com valores constantes."""
         self.df['antecipation_fee_percentage'] = 2.89
         self.df['antecipation_fee_interest_type'] = 'Simple'
+        self.df['source_file'] = 'account_fixed_table_fee.csv'
 
     def drop_columns(self):
         """Remove a coluna nao usada."""
@@ -28,13 +25,13 @@ class AccountFixedFeeTransf:
         self.df.drop('fixed_tax_percentual', axis=1, inplace=True)
         self.df.drop('id', axis=1, inplace=True)
 
-    def remove_invalid_fk(self, account_df, payment_form_df):
+    def remove_invalid_fk(self, account_df):
         """Remove registro onde a conta eh invalida."""
         # TODO gerar um log quando essa situacao existe
         self.df = self.df[self.df['account_id'].isin(account_df['id'])]
 
     def fill_join_values(self, member_df):
-        """Preenche member_id usando como base account_id."""
+        """Preencher member_id usando como base account_id."""
         self.df = self.df.merge(
             member_df[['id']], left_on='account_id',
             right_on='id', how='left'
@@ -43,13 +40,13 @@ class AccountFixedFeeTransf:
             'id': 'member_id'
         }, inplace=True)
 
-    def transform(self, df, account_df, payment_form_df, member_df):
+    def transform(self, df, account_df, member_df):
         """Aplicar todas as transformacoes."""
         self.df = df
         self.rename_columns()
         self.set_constant_values()
         self.drop_columns()
-        self.remove_invalid_fk(account_df, payment_form_df)
+        self.remove_invalid_fk(account_df)
         self.fill_join_values(member_df)
 
         return self.df

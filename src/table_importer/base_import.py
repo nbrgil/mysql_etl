@@ -14,6 +14,15 @@ class BaseImport:
         self.__project_home = os.environ['PROJECT_HOME']
 
     @property
+    def db_engine(self):
+        """Propriedade 'table_name'."""
+        return self.__db_engine
+
+    @db_engine.setter
+    def db_engine(self, val):
+        self.__db_engine = val
+
+    @property
     def table_name(self):
         """Propriedade 'table_name'."""
         return self.__table_name

@@ -3,15 +3,14 @@ import abc
 from csv_reader.base_reader import BaseReader
 
 
-class FixedTableFeeReader(BaseReader):
+class ChannelReader(BaseReader):
     """."""
 
     def __init__(self):
         """."""
-        self.datafile_name = 'fixed_table_fee.csv'
+        self.datafile_name = 'channel.csv'
         self.column_names = [
-            'id', 'payment_form_id', 'parcel_number', 'fixed_tax_percentual',
-            'parcel_tax_percentual', 'fixed_tax_value'
+            'id', 'name', 'account_id'
         ]
         super().__init__()
 

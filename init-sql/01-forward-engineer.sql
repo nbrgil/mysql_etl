@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`fee` (
   `variable_fee_percentage` FLOAT NULL COMMENT 'Taxa variável de acordo com o valor e método do pagamento',
   `antecipation_fee_percentage` FLOAT NULL COMMENT 'Taxa percentual aplicada para cada dia antecipado',
   `antecipation_fee_interest_type` VARCHAR(45) NULL COMMENT 'Tipo de juros aplicado a taxa de antecipação',
+  `source_file` VARCHAR(100) NOT NULL,
   INDEX `fk_account_tax_pf_idx` (`payment_method_id` ASC),
   UNIQUE INDEX `UN_FEE` (`account_id` ASC, `payment_method_id` ASC, `installment_number` ASC),
   INDEX `fk_fee_mb_idx` (`member_id` ASC),

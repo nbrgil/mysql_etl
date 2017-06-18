@@ -32,6 +32,7 @@ class TaxAppliedToAccountTransf:
         self.df['antecipation_fee_interest_type'] = 'Compound'
         # TODO Multiplicar esse valor pela qtde na forma de pagamento
         self.df['installment_number'] = 1
+        self.df['source_file'] = 'tax_applied_to_account.csv'
 
     def drop_columns(self):
         """Remove colunas nao utilizadas.

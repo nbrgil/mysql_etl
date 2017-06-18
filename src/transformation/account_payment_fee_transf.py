@@ -31,12 +31,10 @@ class AccountPaymentFeeTransf:
     def set_constant_values(self):
         """Adicionar colunas com valores constantes."""
         self.df['antecipation_fee_interest_type'] = 'Simple'
+        self.df['source_file'] = 'account_payment_fee.csv'
 
     def drop_columns(self):
-        """Remove colunas nao utilizadas.
-
-        Elas sao removidas apos tratamento em outra coluna
-        """
+        """Remove colunas nao utilizadas."""
         self.df.drop('between_two_and_six_parcels', axis=1, inplace=True)
         self.df.drop('more_than_seven_parcels', axis=1, inplace=True)
         self.df.drop('id', axis=1, inplace=True)
@@ -49,17 +47,26 @@ class AccountPaymentFeeTransf:
             self.df[str(x)] = self.df['more_than_seven_parcels']
 
     def pivot_installment_values(self):
-        """Efetua um pivot das colunas de valores."""
+        """Efetua um pivot das colunas de valores.
+
+        Esse pivot eh realizado para duplicar o valor por parcela
+        """
         self.df = pd.melt(self.df, id_vars=[
             'account_id', 'payment_method_id', 'minimum_fee_value',
             'antecipation_fee_percentage', 'antecipation_fee_interest_type',
-            'member_id'
+            'member_id', 'source_file'
         ], value_vars=[
+            # TODO Deixar o numero de parcelas dinamico
             '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'
         ], var_name='installment_number', value_name='variable_fee_percentage')
 
-    def remove_invalid_fk(self, account_df):
+    def remove_invalid_account(self, account_df):
         """Remove registro onde a conta eh invalida."""
+        # TODO gerar um log quando essa situacao existe
+        self.df = self.df[self.df['account_id'].isin(account_df['id'])]
+
+    def filter_account_in_channel(self, channel_account_df):
+        """Remove registros que possuem ."""
         # TODO gerar um log quando essa situacao existe
         self.df = self.df[self.df['account_id'].isin(account_df['id'])]
 
@@ -79,7 +86,7 @@ class AccountPaymentFeeTransf:
         """Aplicar todas as transformacoes."""
         self.df = df
         self.fix_float_values()
-        self.remove_invalid_fk(account_df)
+        self.remove_invalid_account(account_df)
         self.fill_join_values(member_df)
         self.set_constant_values()
 
